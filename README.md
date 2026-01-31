@@ -15,15 +15,15 @@ A clean, modular web application built with Python and Flask that allows users t
 ## 📸 Screenshots
 
 ### 1. Home - Add Note Form
-![Add Note Page](path_to_your_screenshot1.png)
+![Add Note Page](./screenshots/Add_Notes_Page.png)
 *The main landing page where users can input their notes and author details.*
 
 ### 2. Search Page
-![Search Page](path_to_your_screenshot2.png)
+![Search Page](./screenshots/View_Notes-Enter_Author_Name.png)
 *The interface where users enter an author's name to filter the database.*
 
 ### 3. View & Delete Notes
-![Notes View](path_to_your_screenshot3.png)
+![Notes View](./screenshots/Notes_by_Specific_Author-Manan_ur_Rehman.png)
 *The results display featuring the "Soft Delete" highlight for marked notes.*
 
 ---
