@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Search Notes</title>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Search Notes by Author</h1>
+        
+        <form method="POST" class="flex gap-2 mb-8">
+            <input type="text" name="author_search" placeholder="Enter Author Name..." required 
+                   class="flex-1 p-2 border rounded shadow-sm focus:ring-2 focus:ring-blue-500 outline-none">
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                Search
+            </button>
+        </form>
+
+        <hr class="mb-8">
+
+        {% if search_performed %}
+            {% if notes %}
+                <h2 class="text-xl font-semibold mb-4 text-gray-700">Notes by {{ author_name }}:</h2>
+                <div class="space-y-4">
+                    {% for note in notes %}
+                    <div class="bg-white p-4 rounded-lg shadow border-l-4 {% if note.is_deleted %}border-red-500 bg-red-50{% else %}border-blue-500{% endif %}">
+                        
+                        <p class="text-lg {% if note.is_deleted %} line-through text-red-500 {% else %} text-gray-800 {% endif %}">
+                            "{{ note.content }}"
+                        </p>
+
+                        <div class="mt-2 text-sm text-gray-500 flex justify-between items-center">
+                            <div>
+                                <span>Author: <strong>{{ note.author }}</strong></span>
+                                {% if note.is_deleted %}
+                                    <br><span class="text-red-600 font-bold">Moved to Trash - will Remove after confirmation</span>
+                                {% endif %}
+                            </div>
+
+                            {% if not note.is_deleted %}
+                            <form action="{{ url_for('main.delete_note', note_id=note.id) }}" method="POST">
+                                <input type="hidden" name="author_name" value="{{ author_name }}">
+                                <button type="submit" class="text-red-500 hover:text-red-700 font-bold border border-red-500 px-2 py-1 rounded text-xs">
+                                    Delete
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                    <strong>Sorry!</strong> The author "{{ author_name }}" does not exist in our records.
+                </div>
+            {% endif %}
+        {% else %}
+            <p class="text-gray-500 italic">Enter a name above to see their notes. (as Manan ur Rehman)</p>
+        {% endif %}
+
+        <div class="mt-8">
+            <a href="/" class="text-blue-600 hover:underline">← Go Back to Add Note</a>
+        </div>
+    </div>
+</body>
+</html>
